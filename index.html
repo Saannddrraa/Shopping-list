@@ -74,44 +74,28 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque debitis eum, tempora exercitationem fugiat laboriosam? Iure, minus nesciunt consequuntur, rerum reiciendis sed consequatur excepturi aut commodi officiis, libero veritatis quod.</p>
             </div>
         </div>
-
     </div>
-    <script>
-        //Searching for items
-//accessing an input within a form element
-//const - one search input box
-const SEARCH = document.forms['search-item'].querySelector('input');
-SEARCH.addEventListener('keyup', (e) => {
+    
+    <script>  
+    const SEARCH = document.forms['search-item'].querySelector('input');
+    SEARCH.addEventListener('keyup', (e) => {
     let text = e.target.value.toLowerCase();
-//convert it to lower case make case insensitive; doens't alter the original string,generates a new modified string
-//convert to lower case whatever your user types, caseinsensitive search
+    let groceryList = document.querySelector('#grocery-list ul');
+    let groceries = document.getElementsByTagName('li');
+    let groceriesArray = Array.from(groceries);
 
-//convert the html collection into an array so we can access the forEach method; Array.from()
-let groceryList = document.querySelector('#grocery-list ul');
-let groceries = document.getElementsByTagName('li');
-let groceriesArray = Array.from(groceries);
-//array.froom 1. array-like object(length propery & indexed elements) 2. from an iterable object -things like map or set
-groceriesArray.forEach((grocery) => {
+    groceriesArray.forEach((grocery) => {
     let groceryName = grocery.firstElementChild.textContent;
     let groceryNameLower = groceryName.toLocaleLowerCase();
-    //an array is a single variable with multiple values
-    //access the last item in an array like this - if it doesnt exist in an array a negative 1 is returned
-    //-1 MEANS IT'S NOT FOUND
+    
     if(groceryNameLower.indexOf(text)== -1){
         grocery.style.display = 'none';
     }else {
         grocery.style.display = 'block';
     }
-})
-});
+    })
+    });
 
-
-
-
-
-//get hide checkbox working - change event is fired for input, select, textarea
-//don't use event delegation here bec. we have to acc. target to determin whearher the checkbox is checked or not
-//better option is to work on input element itself
 let checkbox = document.querySelector('#hide');
         checkbox.addEventListener('change', (e) => {
             let groceryList = document.getElementById('grocery-list');
@@ -122,28 +106,6 @@ let checkbox = document.querySelector('#hide');
             }
         })
 
-
-
-
-
-        // // ADD ITEMS - CREATING ELEMENTS DYNAMICALLY
-        // let addItem = document.getElementById('add-item');
-        // addItem.addEventListener('submit', (e) => {
-        //     e.preventDefault();
-        //     let input = addItem.querySelector('input').value;
-        // });
-
-        // DELETE ITEMS
-        // utilize event bubbling and event delegation
-        // 1. solution: old shool - INEFFICIENT !!!
-       /* let delBtns = document.querySelectorAll('#grocery-list li .delete');
-        delBtns.forEach((delBtn)=>{
-                delBtn.addEventListener('click', (e) =>{
-                    const li = e.target.parentElement;
-                    li.parentElement.removeChild(li);
-                });
-        });*/
-        // 2. solution: add event listener to ul so it can listen click events that bubble up to it
         let groceryListUL = document.querySelector('#grocery-list ul');
         groceryListUL.addEventListener('click', remove);
         //acc. the event object, we have to put it in a variable
@@ -155,7 +117,7 @@ let checkbox = document.querySelector('#hide');
             li.remove();
         }
         }
-        //add item
+       
         let formAdd = document.getElementById('add-item'); 
         formAdd.addEventListener('submit', (e)=>{
             let ul = document.getElementsByTagName('ul')[0];
@@ -171,17 +133,11 @@ let checkbox = document.querySelector('#hide');
             ul.appendChild(groceryItem);
             groceryName.textContent = text;
             delButton.textContent = 'delete';
-        //using the className property overrides other classes, you can't add more than one
-       //new way to add classes dinamically - classList API
             groceryName.classList.add('name');
             delButton.classList.add('delete');
         })
-        
-
     </script>
-    <!-- add our JavaScript -->
     
-    <!-- <script src="app.js"></script> -->
 </body>
 
 </html>
